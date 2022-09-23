@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style> 
+      *{
+        margin:0;
+        padding: 0;
+      }
+      h1{
+        color: white;
+        font-size: 4rem;
+        font-weight: bolder;
+      }
+      body {
+        background-color: rebeccapurple;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 450px;
+        user-select: none;
+        text-align: center;
+      }
+    
+      .box {
+        cursor: pointer;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        margin: .3rem;
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        border: 2px solid black;
+        font-size: 6rem;
+        font-weight: bolder;
+      }
+      .score {
+        cursor: pointer;
+        text-transform: uppercase;
+        display: flex;
+        margin: 1rem;
+        width: 100px;
+        height: 100px;
+        border: 2px solid black;
+        font-size: 6rem;
+        font-weight: bolder;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      }
+      .score:nth-child(1){
+        background-color: rgb(124, 253, 124);
+      }
+      .score:nth-child(2){
+        background-color: rgb(216, 207, 207);
+      }
+      .score:nth-child(3){
+        background-color: rgb(247, 76, 76);
+      }
+      .result{
+        cursor: pointer;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        margin: 1rem;
+        width: 300px;
+        height: 100px;
+        font-size: 6rem;
+        font-weight: bolder;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      button{
+        padding: 1rem 2rem;
+      }
+      h2{
+        color: white;
+      }
+      </style>
+</head>
+<body>
+  <div>
+    <h1>Tic Tac Toe</h1>
+    <h2>X MOVE</h2>
+  </div>
+    
+    <div style="
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: white;">
+      <div class="score X">0</div>
+      <div class="score TIE">0</div>
+      <div class="score O">0</div>
+    </div>
+    <div class="box"> </div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+
+    <div class="result"></div>
+    <script>
+    let turn = 1;
+    function gameInit(){
+
+       
+        let gameStatus = 1;
+        let boxes = document.querySelectorAll('.box')
+        
+        boxes.forEach(box => {
+          box.innerText=""
+        })
+        document.querySelector('.result').innerHTML=""
+        boxes.forEach(box => {
+          box.addEventListener('mousedown', function(){
+            if(gameStatus === 1){
+              
+              turn == 1 ? box.innerText="x" : box.innerText="o"
+              turn == 1 ? turn = 2 : turn = 1
+              checkWinCondition()
+            }
+          }, {once:true})
+        });
+        
+        
+          function checkWinCondition() {
+            turn == 1 ? document.querySelector('h2').innerText="X TURN" : document.querySelector('h2').innerText="O TURN"
+        
+            if (boxes[0].innerText === "X" && boxes[1].innerText === "X" && boxes[2].innerText === "X" ||
+              boxes[3].innerText === "X" && boxes[4].innerText === "X" && boxes[5].innerText === "X" ||
+              boxes[6].innerText === "X" && boxes[7].innerText === "X" && boxes[8].innerText === "X" ||
+              boxes[0].innerText === "X" && boxes[3].innerText === "X" && boxes[6].innerText === "X" ||
+              boxes[1].innerText === "X" && boxes[4].innerText === "X" && boxes[7].innerText === "X" ||
+              boxes[2].innerText === "X" && boxes[5].innerText === "X" && boxes[8].innerText === "X" ||
+              boxes[0].innerText === "X" && boxes[4].innerText === "X" && boxes[8].innerText === "X" ||
+              boxes[2].innerText === "X" && boxes[4].innerText === "X" && boxes[6].innerText === "X"
+            ) {
+                document.querySelector('.result').innerHTML="<p style='margin:0;padding:0;color:green;white-space: nowrap;font-size:2rem;'>X WINNER!</p><button type='button' onclick='gameInit()'>Reset</button>"
+                document.querySelector('.X').innerText=parseInt(document.querySelector('.X').innerText)+1
+                gameStatus = 2
+                boxes.forEach(box => {
+                  box.removeEventListener("mousedown", function () { })
+                })
+        
+            }
+        
+            if (boxes[0].innerText === "O" && boxes[1].innerText === "O" && boxes[2].innerText === "O" ||
+              boxes[3].innerText === "O" && boxes[4].innerText === "O" && boxes[5].innerText === "O" ||
+              boxes[6].innerText === "O" && boxes[7].innerText === "O" && boxes[8].innerText === "O" ||
+              boxes[0].innerText === "O" && boxes[3].innerText === "O" && boxes[6].innerText === "O" ||
+              boxes[1].innerText === "O" && boxes[4].innerText === "O" && boxes[7].innerText === "O" ||
+              boxes[2].innerText === "O" && boxes[5].innerText === "O" && boxes[8].innerText === "O" ||
+              boxes[0].innerText === "O" && boxes[4].innerText === "O" && boxes[8].innerText === "O" ||
+              boxes[2].innerText === "O" && boxes[4].innerText === "O" && boxes[6].innerText === "O"
+            ) {
+                document.querySelector('.result').innerHTML="<p style='margin:0;padding:0;color:red;white-space: nowrap;font-size:2rem;'>O WINNER!</p><button type='button' onclick='gameInit()'>Reset</button>"
+                gameStatus = 2
+                document.querySelector('.O').innerText=parseInt(document.querySelector('.O').innerText)+1
+            }
+        
+            if( gameStatus === 1 &&
+            boxes[0].innerText.length > 0 && boxes[1].innerText.length > 0 && boxes[2].innerText.length > 0 && 
+            boxes[3].innerText.length > 0 && boxes[4].innerText.length > 0 && boxes[5].innerText.length > 0 && 
+            boxes[6].innerText.length > 0 && boxes[7].innerText.length > 0 && boxes[8].innerText.length > 0 
+            ) {
+              document.querySelector('.result').innerHTML="<p style='margin:0;padding:0;color:white;'>TIE</p><button type='button' onclick='gameInit()'>Reset</button>"
+              document.querySelector('.TIE').innerText=parseInt(document.querySelector('.TIE').innerText)+1
+            }
+        
+          }
+        }
+        gameInit()</script>
+</body>
+</html>
